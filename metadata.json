@@ -1,0 +1,8 @@
+{
+  "name": "Vallini e Leme",
+  "description": "Vallini & Leme Advocacia - Escritório de Advocacia em Campinas/SP especializado em Ações do INSS, Consulta Aposentadoria, Planejamento Previdenciário, Auxílios por Incapacidade e Consulta para Pessoas Jurídicas.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

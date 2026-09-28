@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", "sans-serif";
+  --font-heading: "Plus Jakarta Sans", "sans-serif";
+  --font-mono: "JetBrains Mono", "monospace";
+
+  /* Paleta oficial Vallini & Leme Advocacia */
+  --color-primary: #080F3D; /* Azul principal */
+  --color-deep: #050A2A; /* Azul profundo */
+  --color-secondary: #10194D; /* Azul escuro secundário */
+  --color-medium: #1B2763; /* Azul médio */
+  --color-soft: #354078; /* Azul suave */
+  --color-white-main: #F7F7F5; /* Branco principal */
+  --color-white-pure: #FFFFFF; /* Branco puro */
+  --color-offwhite: #EDEDE9; /* Off-white */
+  --color-light-gray: #D9DAD8; /* Cinza claro */
+  --color-graphite: #222633; /* Grafite */
+
+  /* Mapeamento de tokens temáticos */
+  --color-navy-950: #050A2A; /* Azul profundo */
+  --color-navy-900: #080F3D; /* Azul principal */
+  --color-navy-800: #10194D; /* Azul escuro secundário */
+  --color-navy-700: #1B2763; /* Azul médio */
+  --color-navy-600: #354078; /* Azul suave */
+  
+  --color-silver-100: #FFFFFF; /* Branco puro */
+  --color-silver-200: #F7F7F5; /* Branco principal */
+  --color-silver-300: #EDEDE9; /* Off-white */
+  --color-silver-400: #D9DAD8; /* Cinza claro */
+  --color-silver-500: #D9DAD8;
+  --color-silver-600: #222633; /* Grafite */
+
+  /* Brand mapped tokens to retain compatibility across components */
+  --color-brand-50: #F7F7F5;
+  --color-brand-100: #EDEDE9;
+  --color-brand-200: #D9DAD8;
+  --color-brand-300: #D9DAD8;
+  --color-brand-400: #354078;
+  --color-brand-500: #1B2763;
+  --color-brand-600: #10194D;
+  --color-brand-700: #10194D;
+  --color-brand-800: #080F3D;
+  --color-brand-900: #080F3D;
+  --color-brand-950: #050A2A;
+
+  --animate-marquee: marquee 30s linear infinite;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: #050A2A;
+    color: #F7F7F5;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    letter-spacing: -0.02em;
+  }
+  ::selection {
+    background-color: #D9DAD8;
+    color: #080F3D;
+  }
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
