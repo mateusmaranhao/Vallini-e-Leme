@@ -57,11 +57,12 @@ export function Home() {
             <p className="text-[#D9DAD8]/80 leading-relaxed mb-8 text-sm">
               Cada cliente recebe acolhimento humanizado, análise documental cirúrgica e um cálculo previdenciário personalizado para assegurar o benefício mais vantajoso para pessoas físicas e a devida segurança para empresas.
             </p>
-            <Button variant="outline" className="self-start rounded-none border-[#D9DAD8] text-[#D9DAD8] hover:bg-[#D9DAD8] hover:text-[#080F3D] uppercase tracking-widest font-bold text-xs px-6 py-3 h-auto transition-all" asChild>
+            <Button className="self-start rounded-none bg-[#D9DAD8] text-[#080F3D] hover:bg-white uppercase tracking-widest font-bold text-xs px-6 py-3.5 h-auto transition-all shadow-md flex items-center gap-2" asChild>
               <Link to="/sobre" onMouseEnter={() => {
                 import('@/pages/sobre');
               }}>
-                Conheça o Escritório <ArrowRight className="w-4 h-4 ml-2" />
+                <span>Conheça o Escritório</span>
+                <ArrowRight className="w-4 h-4 ml-1" />
               </Link>
             </Button>
           </div>

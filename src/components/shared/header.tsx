@@ -10,6 +10,24 @@ export function Header() {
   const location = useLocation();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const handleMouseEnter = () => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
+    setDropdownOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+    }
+    closeTimeoutRef.current = setTimeout(() => {
+      setDropdownOpen(false);
+    }, 200);
+  };
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -18,7 +36,12 @@ export function Header() {
       }
     }
     document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      if (closeTimeoutRef.current) {
+        clearTimeout(closeTimeoutRef.current);
+      }
+    };
   }, []);
 
   // Close dropdown on route change
@@ -69,14 +92,14 @@ export function Header() {
             {/* Dropdown Atuação */}
             <div 
               ref={dropdownRef}
-              className="relative"
-              onMouseEnter={() => setDropdownOpen(true)}
-              onMouseLeave={() => setDropdownOpen(false)}
+              className="relative py-2"
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
             >
               <button
                 type="button"
                 onClick={() => setDropdownOpen((prev) => !prev)}
-                className={`flex items-center gap-1.5 pb-1 border-b-2 transition-colors cursor-pointer ${
+                className={`flex items-center gap-1.5 pb-1 border-b-2 uppercase tracking-wider transition-colors cursor-pointer ${
                   isAtuacaoActive 
                     ? "text-white border-[#D9DAD8] font-semibold" 
                     : "text-[#D9DAD8]/70 hover:text-white border-transparent"
@@ -84,30 +107,36 @@ export function Header() {
                 aria-expanded={dropdownOpen}
                 aria-haspopup="true"
               >
-                <span>Atuação</span>
+                <span>ATUAÇÃO</span>
                 <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${dropdownOpen ? 'rotate-180' : ''}`} />
               </button>
 
               {dropdownOpen && (
-                <div className="absolute top-full left-0 mt-2 w-72 bg-[#080F3D] border border-[#10194D] shadow-2xl py-2 z-50 rounded-none animate-in fade-in slide-in-from-top-1 duration-150">
-                  <div className="border-b border-[#10194D] pb-1 mb-1">
-                    <Link
-                      to="/servicos"
-                      className="block px-5 py-2 text-[11px] font-bold uppercase tracking-wider text-[#D9DAD8] hover:text-white hover:bg-[#10194D] transition-colors"
-                    >
-                      Todos os Serviços
-                    </Link>
+                <div 
+                  className="absolute top-full left-0 pt-1 w-72 z-50 animate-in fade-in duration-150"
+                  onMouseEnter={handleMouseEnter}
+                  onMouseLeave={handleMouseLeave}
+                >
+                  <div className="bg-[#080F3D] border border-[#10194D] shadow-2xl py-2 rounded-none">
+                    <div className="border-b border-[#10194D] pb-1 mb-1">
+                      <Link
+                        to="/servicos"
+                        className="block px-5 py-2 text-[11px] font-bold uppercase tracking-wider text-[#D9DAD8] hover:text-white hover:bg-[#10194D] transition-colors"
+                      >
+                        Todos os Serviços
+                      </Link>
+                    </div>
+                    {servicesData.map((service) => (
+                      <Link
+                        key={service.id}
+                        to={`/servicos/${service.id}`}
+                        className="block px-5 py-2.5 text-[12px] font-medium tracking-normal text-[#F7F7F5] hover:text-white hover:bg-[#10194D] transition-colors"
+                        onMouseEnter={() => prefetchRoute('/servicos')}
+                      >
+                        {service.shortTitle}
+                      </Link>
+                    ))}
                   </div>
-                  {servicesData.map((service) => (
-                    <Link
-                      key={service.id}
-                      to={`/servicos/${service.id}`}
-                      className="block px-5 py-2.5 text-[12px] font-medium tracking-normal text-[#F7F7F5] hover:text-white hover:bg-[#10194D] transition-colors"
-                      onMouseEnter={() => prefetchRoute('/servicos')}
-                    >
-                      {service.shortTitle}
-                    </Link>
-                  ))}
                 </div>
               )}
             </div>
@@ -115,14 +144,14 @@ export function Header() {
             <Link to="/#contato" className={getLinkClass('/#contato')}>Contato</Link>
           </nav>
 
-          <Button asChild className="bg-[#10194D] text-white border border-[#D9DAD8]/40 px-5 py-2.5 text-xs font-bold uppercase tracking-widest hover:bg-[#D9DAD8] hover:text-[#080F3D] rounded-none hidden md:inline-flex h-auto transition-all shadow-sm">
+          <Button asChild className="bg-[#D9DAD8] text-[#080F3D] hover:bg-white border-0 px-5 py-2.5 text-xs font-bold uppercase tracking-widest rounded-none hidden md:inline-flex h-auto transition-all shadow-md group">
             <a 
               href="https://wa.me/5519953243159?text=Ol%C3%A1%2C%20gostaria%20de%20uma%20consulta%20com%20as%20advogadas%20especialistas%20em%20a%C3%A7%C3%B5es%20do%20INSS."
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2"
             >
-              <MessageSquareText className="w-3.5 h-3.5 text-[#D9DAD8] group-hover:text-[#080F3D]" />
+              <MessageSquareText className="w-3.5 h-3.5 text-[#080F3D]" />
               <span>(19) 95324-3159</span>
             </a>
           </Button>
